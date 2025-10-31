@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib as plt
 import seaborn as sns
 import plotly.express as px
 
@@ -78,5 +77,6 @@ def main ():
 
     st.header("Base de Datos")
     st.dataframe (df) #Nombre del Data Frame
+
 
 main ()
