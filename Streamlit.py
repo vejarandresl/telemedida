@@ -7,11 +7,19 @@ import plotly.express as px
 
 
 #df = pd.read_csv ("telemedidas.csv")
-df = pd.read_csv ("Telemedidas - Telemedidas (1).csv")
+#df = pd.read_csv ("Telemedidas - Telemedidas (1).csv")
 
 
 
 def main ():
+
+    try:
+        SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPlUnSKSBmE-s7gK9kDyALNIhBlt5-iRKhS2MOjeEpvJTEpn7h3n2Y7kZyeaWCicupMFrDo7wTqHZg/pub?gid=0&single=true&output=csv"
+        df = pd.read_csv (SHEET_URL)
+    except Exception as e:
+        st.error(f"Error al cargar la Google Sheet: {e}")
+        st.error("Verifica que la URL es correcta y que está publicada como CSV.")
+        st.stop() # Detiene la app si no puede cargar los datos
 
     st.set_page_config(page_title="TEL", layout="wide")
 
@@ -80,3 +88,4 @@ def main ():
 
 
 main ()
+
