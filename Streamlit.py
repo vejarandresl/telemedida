@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import plotly.express as px
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=300)
 def load_data():
     """
     Carga los datos desde la Google Sheet y los guarda en caché por 10 minutos.
@@ -93,5 +93,6 @@ def main ():
 
 
 main ()
+
 
 
