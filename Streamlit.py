@@ -3,26 +3,31 @@ import pandas as pd
 import seaborn as sns
 import plotly.express as px
 
-
-
-
-#df = pd.read_csv ("telemedidas.csv")
-#df = pd.read_csv ("Telemedidas - Telemedidas (1).csv")
-
-
+@st.cache_data(ttl=600)
+def load_data():
+    """
+    Carga los datos desde la Google Sheet y los guarda en caché por 10 minutos.
+    """
+    try:
+        # --- CORRECCIÓN 2: Reemplaza este texto con tu link real ---
+        SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPlUnSKSBmE-s7gK9kDyALNIhBlt5-iRKhS2MOjeEpvJTEpn7h3n2Y7kZyeaWCicupMFrDo7wTqHZg/pub?gid=0&single=true&output=csv" 
+        df = pd.read_csv(SHEET_URL)
+        return df # Devuelve los datos si tiene éxito
+        
+    except Exception as e:
+        # Esto solo se ejecutará si el link está mal puesto
+        st.error(f"Error al cargar la Google Sheet: {e}")
+        st.error("Verifica que la URL es correcta y que está publicada como CSV.")
+        return None # Devuelve "Nada" si falla
 
 def main ():
 
-    try:
-        SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPlUnSKSBmE-s7gK9kDyALNIhBlt5-iRKhS2MOjeEpvJTEpn7h3n2Y7kZyeaWCicupMFrDo7wTqHZg/pub?gid=0&single=true&output=csv"
-        df = pd.read_csv (SHEET_URL)
-    except Exception as e:
-        st.error(f"Error al cargar la Google Sheet: {e}")
-        st.error("Verifica que la URL es correcta y que está publicada como CSV.")
-        st.stop() # Detiene la app si no puede cargar los datos
-
     st.set_page_config(page_title="TEL", layout="wide")
 
+    df=load_data()
+
+    if df is None:
+        st.stop() 
     
     st.title ("KPI TELEMEDIDA") #Título
     st.header ("Avance del Proyecto") #Encabezado
@@ -88,4 +93,5 @@ def main ():
 
 
 main ()
+
 
